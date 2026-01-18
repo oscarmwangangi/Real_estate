@@ -5,10 +5,11 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RealtorListingController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    return redirect('login');
 });
 
 Route::get('/dashboard', function () {
@@ -26,4 +27,11 @@ Route::get('/show', [IndexController::class, 'show']);
 
 Route::resource('/listings', ListingController::class)->middleware('auth');
 
+Route::prefix('realtor')
+  ->name('realtor.')
+ ->middleware('auth')
+  ->group(function () {
+    Route::resource('listing', RealtorListingController::class);
+  });
+  
 require __DIR__.'/auth.php';
