@@ -3,28 +3,28 @@
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
     <Listing v-for="listing in listings.data" :key="listing.id" :listing="listing" />
   </div>
-   <div v-if="listings.data.length" class="w-full flex justify-center mt-8 mb-8">
+  <div v-if="listings.data.length" class="w-full flex justify-center mt-8 mb-8">
     <Pagination />
   </div>
 </template>
 
 <script setup>
-// import Listing from 'Index/Components/Listing.vue'
 import Listing from '@/Pages/Listings/Index/Components/Listing.vue'
 import Pagination from '@/Components/Ui/Pagination.vue';
-import Filters from '@Index/Components/Filters.vue'
+import Filters from '@/Pages/Listings/Index/Components/Filters.vue';
 
+// Props
+const props = defineProps({
+  listings: Object,
+  filters: Object
+})
 </script>
 
 <script>
-  import MainLayout from '@/Layouts/MainLayout.vue'
+// Assign layout here (classic script)
+import MainLayout from '@/Layouts/MainLayouts.vue'
 
 export default {
-  layout: MainLayout,
+  layout: MainLayout
 }
-
-defineProps({
-  listings: object,
-  filters: object
-})
 </script>

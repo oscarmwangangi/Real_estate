@@ -16,6 +16,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+                ->name('logout');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -25,13 +28,16 @@ Route::middleware('auth')->group(function () {
 Route::get('/index', [IndexController::class, 'index']);
 Route::get('/show', [IndexController::class, 'show']);
 
-Route::resource('/listings', ListingController::class)->middleware('auth');
+Route::resource('/listings', ListingController::class)
+->only(['index', 'show', 'create', 'store', 'edit', 'update'])
+->middleware('auth');
 
 Route::prefix('realtor')
   ->name('realtor.')
  ->middleware('auth')
   ->group(function () {
-    Route::resource('listing', RealtorListingController::class);
+    Route::resource('listings', RealtorListingController::class)
+      ->only(['index', 'destroy']);
   });
   
 require __DIR__.'/auth.php';

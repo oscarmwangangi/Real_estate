@@ -56,15 +56,15 @@ const props = defineProps({
 const filterForm = useForm({
   priceFrom: props.filters.priceFrom ?? null,
   priceTo: props.filters.priceTo ?? null,
-  beds: props.filters.beds ?? null,
-  baths: props.filters.baths ?? null,
+  beds: props.filters.bed ?? null,
+  baths: props.filters.bath ?? null,
   areaFrom: props.filters.areaFrom ?? null,
   areaTo: props.filters.areaTo ?? null,
 })
 
 const filter = () => {
   filterForm.get(
-    route('listing.index'),
+    route('listings.index'),
     {
       preserveState: true,
       preserveScroll: true,

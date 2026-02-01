@@ -12,6 +12,10 @@ class ListingPolicy
      * Determine whether the user can view any models.
 
      */
+        public function __construct()
+    {
+       /* $this->authorizeResource(Listing::class, 'listing'); */
+    }
 
     public function before(User $user, $ability)
     {
