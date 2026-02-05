@@ -20,13 +20,13 @@
         />
       </Link>
     </div>
-    <div>
+    <!-- <div>
       <Link
         :href="route('listings.edit', listing.id)"
       >
         Edit
       </Link>
-    </div>
+    </div> -->
     <!-- <div>
       <Link
         :href="route('listings.destroy', listing.id)"

@@ -29,15 +29,24 @@ Route::get('/index', [IndexController::class, 'index']);
 Route::get('/show', [IndexController::class, 'show']);
 
 Route::resource('/listings', ListingController::class)
-->only(['index', 'show', 'create', 'store', 'edit', 'update'])
-->middleware('auth');
+->only(['index', 'show']);
+
 
 Route::prefix('realtor')
   ->name('realtor.')
  ->middleware('auth')
   ->group(function () {
+    
+Route::name('listing.restore')
+    ->put(
+    'listing/{listing}/restore',
+    [RealtorListingController::class, 'restore']
+    )->withTrashed();
+
+
     Route::resource('listings', RealtorListingController::class)
-      ->only(['index', 'destroy']);
+       ->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])
+      ->withTrashed();
   });
   
 require __DIR__.'/auth.php';

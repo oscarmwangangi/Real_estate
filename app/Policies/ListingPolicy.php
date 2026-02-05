@@ -25,7 +25,7 @@ class ListingPolicy
     }
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->id === $listing->user_id;
     }
 
     /**
@@ -33,7 +33,7 @@ class ListingPolicy
      */
     public function view(User $user, Listing $listing): bool
     {
-        return false;
+         return false;
     }
 
     /**

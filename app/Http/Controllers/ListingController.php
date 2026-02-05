@@ -29,40 +29,9 @@ class ListingController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        Gate::authorize('create', Listing::class);
-        return inertia('Listings/Create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'bed' => 'required|numeric',
-            'bath' => 'required|numeric',
-            'area' => 'required|numeric',
-            'city' => 'required|string',
-            'code' => 'required|string',
-            'street' => 'required|string',
-            'street_nr' => 'required|string',
-            'price' => 'required|numeric',
-        ]);
-
-        Listing::create($validated);
-
-        return redirect()->route('listings.index')->with('success', 'listing was created');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Listing $listing)
+    
+     // Show the form for creating a new resource.
+     public function show(Listing $listing)
     {
        // if (auth()->user()->can('view', $listing)) {
          //    abort(403);
@@ -73,43 +42,8 @@ class ListingController extends Controller
                 'listing' => $listing,
             ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Listing $listing)
-    {
-        return inertia('Listings/Edit',
-
-           
-            [
-                'listing' => $listing
-            ]
-        );
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        Gate::authorize('update', Listing::class);
-        $validated = $request->validate([
-            'bed' => 'required|numeric',
-            'bath' => 'required|numeric',
-            'area' => 'required|numeric',
-            'city' => 'required|string',
-            'code' => 'required|string',
-            'street' => 'required|string',
-            'street_nr' => 'required|string',
-            'price' => 'required|numeric',
-        ]);
-        $listing = Listing::findOrFail($id);
-        $listing-> update($request->all());
-        return redirect()->route('listings.index')->with('success', 'listing was updated');
-
-    }
-
+       
+  
     /**
      * Remove the specified resource from storage.
      */

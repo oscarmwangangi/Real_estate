@@ -31,8 +31,16 @@
 
 <script setup>
 import { reactive, watch, computed } from 'vue'
-import { Inertia } from '@inertiajs/inertia'
-import { debounce } from 'lodash'
+import { router } from "@inertiajs/vue3";
+// import { debounce } from 'lodash'
+
+function debounce(fn, delay = 300) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => fn(...args), delay)
+  }
+}
 
 const sortLabels = {
   created_at: [
@@ -58,17 +66,27 @@ const sortLabels = {
 }
 
 const sortOptions = computed(() => sortLabels[filterForm.by])
-
+const props = defineProps({
+  filters: Object,
+})
 const filterForm = reactive({
-  deleted: false,
+  deleted:  props.filters.deleted ?? false,
   by: 'created_at',
   order: 'desc',
 })
 watch(
-  filterForm, debounce(() => Inertia.get(
-    route('realtor.listings.index'),
-    filterForm,
-    { preserveState: true, preserveScroll: true },
-  ), 1000),
+  () => ({ ...filterForm }),
+  debounce(() => {
+    router.get(
+      route('realtor.listings.index'),
+      filterForm,
+      {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true,
+      }
+    )
+  }, 1000)
 )
+
 </script>
